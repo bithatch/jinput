@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>net.java.jinput</groupId>
+        <groupId>uk.co.bithatch</groupId>
         <artifactId>jinput-parent</artifactId>
         <version>2.0.11-SNAPSHOT</version>
         <relativePath>../</relativePath>
@@ -71,10 +71,10 @@
                 <configuration>
                     <includeDependencySources>true</includeDependencySources>
                     <dependencySourceExcludes>
-                        <dependencySourceExclude>net.java.jinput:osx-plugin</dependencySourceExclude>
-                        <dependencySourceExclude>net.java.jinput:linux-plugin</dependencySourceExclude>
-                        <dependencySourceExclude>net.java.jinput:windows-plugin</dependencySourceExclude>
-                        <dependencySourceExclude>net.java.jinput:wintab-plugin</dependencySourceExclude>
+                        <dependencySourceExclude>uk.co.bithatch:osx-plugin</dependencySourceExclude>
+                        <dependencySourceExclude>uk.co.bithatch:linux-plugin</dependencySourceExclude>
+                        <dependencySourceExclude>uk.co.bithatch:windows-plugin</dependencySourceExclude>
+                        <dependencySourceExclude>uk.co.bithatch:wintab-plugin</dependencySourceExclude>
                     </dependencySourceExcludes>
                 </configuration>
             </plugin>
@@ -95,25 +95,25 @@
                         <configuration>
                             <filters>
                                 <filter>
-                                    <artifact>net.java.jinput:osx-plugin:natives-osx</artifact>
+                                    <artifact>uk.co.bithatch:osx-plugin:natives-osx</artifact>
                                     <excludes>
                                         <exclude>**/*</exclude>
                                     </excludes>
                                 </filter>
                                 <filter>
-                                    <artifact>net.java.jinput:linux-plugin:natives-linux</artifact>
+                                    <artifact>uk.co.bithatch:linux-plugin:natives-linux</artifact>
                                     <excludes>
                                         <exclude>**/*</exclude>
                                     </excludes>
                                 </filter>
                                 <filter>
-                                    <artifact>net.java.jinput:windows-plugin:natives-windows</artifact>
+                                    <artifact>uk.co.bithatch:windows-plugin:natives-windows</artifact>
                                     <excludes>
                                         <exclude>**/*</exclude>
                                     </excludes>
                                 </filter>
                                 <filter>
-                                    <artifact>net.java.jinput:wintab-plugin:natives-wintab</artifact>
+                                    <artifact>uk.co.bithatch:wintab-plugin:natives-wintab</artifact>
                                     <excludes>
                                         <exclude>**/*</exclude>
                                     </excludes>
@@ -140,7 +140,7 @@
                         <configuration>
                             <filters>
                                 <filter>
-                                    <artifact>net.java.jinput:osx-plugin</artifact>
+                                    <artifact>uk.co.bithatch:osx-plugin</artifact>
                                     <includes>
                                         <include>**/*.jnilib</include>
                                         <include>META-INF/**/*</include>
@@ -150,7 +150,7 @@
                                     </excludes>
                                 </filter>
                                 <filter>
-                                    <artifact>net.java.jinput:linux-plugin</artifact>
+                                    <artifact>uk.co.bithatch:linux-plugin</artifact>
                                     <includes>
                                         <include>**/*.so</include>
                                         <include>META-INF/**/*</include>
@@ -160,7 +160,7 @@
                                     </excludes>
                                 </filter>
                                 <filter>
-                                    <artifact>net.java.jinput:windows-plugin</artifact>
+                                    <artifact>uk.co.bithatch:windows-plugin</artifact>
                                     <includes>
                                         <include>**/*.dll</include>
                                         <include>META-INF/**/*</include>
@@ -170,7 +170,7 @@
                                     </excludes>
                                 </filter>
                                 <filter>
-                                    <artifact>net.java.jinput:wintab-plugin</artifact>
+                                    <artifact>uk.co.bithatch:wintab-plugin</artifact>
                                     <includes>
                                         <include>**/*.dll</include>
                                         <include>META-INF/**/*</include>
@@ -182,9 +182,9 @@
                             </filters>
                             <artifactSet>
                                 <excludes>
-                                    <exclude>net.java.jutils:jutils</exclude>
-                                    <exclude>net.java.jinput:jinput</exclude>
-                                    <exclude>net.java.jinput:coreapi</exclude>
+                                    <exclude>uk.co.bithatch:jutils</exclude>
+                                    <exclude>uk.co.bithatch:jinput</exclude>
+                                    <exclude>uk.co.bithatch:coreapi</exclude>
                                 </excludes>
                             </artifactSet>
                             <shadedArtifactAttached>true</shadedArtifactAttached>

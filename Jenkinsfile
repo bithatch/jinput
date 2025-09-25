@@ -2,8 +2,8 @@ pipeline {
     agent none
     triggers { pollSCM('H/15 * * * *') }
     tools {
-        maven 'Maven 3.9.5'
-        jdk 'OpenJDK 16'
+        maven 'Maven 3.9.0'
+        jdk 'JDK 17'
     }
     options { buildDiscarder(logRotator(numToKeepStr: '5')) }
     parameters {
@@ -12,14 +12,14 @@ pipeline {
     stages {
         stage('Build core') {
             agent {
-                label "osx"
+                label "macos"
             }
             steps {
                 sh 'mvn -B -Dmaven.antrun.skip -Dmaven.source.skip -Dmaven.test.skip -DskipTests -DskipITs -pl coreAPI/ package'
             }
             post {
                 success {
-                    archiveArtifacts artifacts: 'coreAPI/target/apidocs/**/*', fingerprint: true
+                    archiveArtifacts artifacts: 'coreAPI/target/reports/apidocs/**/*', fingerprint: true
                 }
             }
         }
@@ -30,7 +30,8 @@ pipeline {
                         label "windows"
                     }
                     steps {
-                        bat 'mvn -B -am -pl plugins/windows/,plugins/wintab/ clean compile'
+                        bat '"C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Auxiliary\\Build\\vcvarsall.bat" x86_amd64 & mvn -B -am -pl plugins/windows/ clean compile'
+                        //bat '"C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Auxiliary\\Build\\vcvarsall.bat" x86_amd64 & mvn -B -am -pl plugins/wintab/ clean compile'
                     }
                     post {
                         success {
@@ -53,7 +54,7 @@ pipeline {
                 }
                 stage('Build OSX natives') {
                     agent {
-                        label "osx"
+                        label "macos"
                     }
                     steps {
                         sh 'mvn -B -am -pl plugins/OSX/ clean compile'
@@ -87,23 +88,27 @@ pipeline {
             agent {
                 label "linux"
             }
-            when { branch 'master' }
             steps {
                 milestone(1)
                 unstash 'windows-natives'
                 unstash 'osx-natives'
                 unstash 'linux-natives'
+                unstash 'all-java-jars'
+                /*
                 sh 'echo $GPG_SECRET_KEYS | base64 --decode | gpg --batch --import'
                 sh 'echo $GPG_OWNERTRUST | base64 --decode | gpg --import-ownertrust'
+                */
                 withMaven(
-                        maven: 'Maven 3.9.5',
-                        jdk: 'OpenJDK 16',
-                        globalMavenSettingsConfig: 'global-maven-settings-ossrh'
+                    maven: 'Maven 3.9.0',
+                    jdk: 'JDK 17',
+                    mavenOpts: '--add-exports jdk.crypto.cryptoki/sun.security.pkcs11.wrapper=ALL-UNNAMED',
+                    globalMavenSettingsConfig: 'd3cb0633-639b-4b53-9d31-ef8c4c19fa25'
                 ) {
-                    sh "mvn -P windows,linux,osx,wintab -Dmaven.antrun.skip -Dmaven.test.skip -DskipTests -DskipITs deploy"
+                    sh "mvn -P windows,linux,osx,wintab -Dmaven.antrun.skip -Dmaven.test.skip -DskipTests -DskipITs -Dgpg.keyname=brett@logonbox.com -Dgpg.name=brett@logonbox.com deploy"
                 }
             }
         }
+        /*
         stage('Release') {
             agent {
                 label "linux"
@@ -121,9 +126,9 @@ pipeline {
                 sh 'echo $GPG_SECRET_KEYS | base64 --decode | gpg --batch --import'
                 sh 'echo $GPG_OWNERTRUST | base64 --decode | gpg --import-ownertrust'
                 withMaven(
-                        maven: 'Maven 3.9.5',
-                        jdk: 'OpenJDK 16',
-                        globalMavenSettingsConfig: 'global-maven-settings-ossrh'
+                        maven: 'Maven 3.9.0',
+                        jdk: 'JDK 17',
+                        globalMavenSettingsConfig: 'd3cb0633-639b-4b53-9d31-ef8c4c19fa25'
                 ) {
                     sh "mvn -P windows,linux,osx,wintab versions:set -DremoveSnapshot"
                     script {
@@ -138,5 +143,6 @@ pipeline {
                 }
             }
         }
+        */
     }
 }

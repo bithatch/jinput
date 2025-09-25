@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>net.java.jinput</groupId>
+        <groupId>uk.co.bithatch</groupId>
         <artifactId>jinput-parent</artifactId>
         <version>2.0.11-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
